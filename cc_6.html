@@ -1,4 +1,5 @@
 <!--U4888-2664 - Dawson Schmitt-->
+<!--Task 1: Configure an HTML canvas element that will serve as the arena for the bouncing ball. -->
 <!--Here is the HTML file that is setting up the canvas.--> 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,24 +20,41 @@ let height = HTMLCanvas.height;
 //Task 2: Create a JavaScript constructor class with specific properties.
 class Ball{
     constructor (x,y,radius,dx,dy,color,){
-    this.x = x
-    this.y = y
-    this.radius = radius
-    this.dx = dx
-    this.dy = dy
-    this.color = color
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.dx = dx;
+    this.dy = dy;
+    this.color = color;
     }
     //Task 3: Implement a method within the Ball constructor to draw the ball on the canvas using its current properties
-    drawCircle(x,y){
-        ctx.fillStyle = this.color
+    drawCircle(){
+        ctx.fillStyle = this.color;
         ctx.beginPath();
         ctx.arc(this.x,this.y,this.radius,0,2*Math.PI);
         ctx.fill();
     }
+    //Task 4:Implement an update method that handles the ball's movement. 
+    //This should include logic to reverse the ball’s direction upon hitting the canvas sides (collision detection). 
+    update() {
+        //Checking to see if the code should reverse the direction traveled.
+        if (this.x + this.radius >= width) {
+            this.dx *= -1
+        }
+        if (this.x - this.radius <= 0) {
+            this.dx *= -1
+        }
+        if (this.y + this.radius >= height) {
+            this.dy *= -1
+        }
+        if (this.y - this.radius <= 0) {
+            this.dy *= -1
+        }
+        //Actually moving the center of the circle.
+        this.x += this.dx;
+        this.y += this.dy;
+    }
 }
-//Testing the code to see if this is working
-let ball = new Ball (200,160,20,2,2,"red")
-ball.drawCircle()
     </script>
 </body>
 </html>
