@@ -1,60 +1,81 @@
 <!--U4888-2664 - Dawson Schmitt-->
 <!--Task 1: Configure an HTML canvas element that will serve as the arena for the bouncing ball. -->
-<!--Here is the HTML file that is setting up the canvas.--> 
+<!--Here is the HTML file that is setting up the canvas.-->
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <title>Coding6</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>The Drawing Space</h1>
-    <!--This is the actual part where the canvas is being created.-->
-    <canvas id="HTMLCanvas" width="1000" height="750"> </canvas>
+
+    <!--This is the actual part where the canvas is being created. I edited the height and width to better fit a fullscreen tab-->
+    <canvas id="HTMLCanvas" width="1500" height="600"> </canvas>
+
     <!--Embeded javascript-->
     <script>
-//Here is tying this javascript to the canvas file.
-let canvas = document.querySelector("#HTMLCanvas");
-let ctx = canvas.getContext("2d");
-let width =HTMLCanvas.width;
-let height = HTMLCanvas.height;
-//Task 2: Create a JavaScript constructor class with specific properties.
-class Ball{
-    constructor (x,y,radius,dx,dy,color,){
-    this.x = x;
-    this.y = y;
-    this.radius = radius;
-    this.dx = dx;
-    this.dy = dy;
-    this.color = color;
-    }
-    //Task 3: Implement a method within the Ball constructor to draw the ball on the canvas using its current properties
-    drawCircle(){
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.arc(this.x,this.y,this.radius,0,2*Math.PI);
-        ctx.fill();
-    }
-    //Task 4:Implement an update method that handles the ball's movement. 
-    //This should include logic to reverse the ball’s direction upon hitting the canvas sides (collision detection). 
-    update() {
-        //Checking to see if the code should reverse the direction traveled.
-        if (this.x + this.radius >= width) {
-            this.dx *= -1
+      //Here is tying this javascript to the canvas file.
+      let canvas = document.querySelector("#HTMLCanvas");
+      let ctx = canvas.getContext("2d");
+      let width = HTMLCanvas.width;
+      let height = HTMLCanvas.height;
+
+      //Task 2: Create a JavaScript constructor class with specific properties.
+      class Ball {
+        constructor(x, y, radius, dx, dy, color) {
+          this.x = x;
+          this.y = y;
+          this.radius = radius;
+          this.dx = dx;
+          this.dy = dy;
+          this.color = color;
         }
-        if (this.x - this.radius <= 0) {
-            this.dx *= -1
+
+        //Task 3: Implement a method within the Ball constructor to draw the ball on the canvas using its current properties
+        drawCircle() {
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+          ctx.fill();
         }
-        if (this.y + this.radius >= height) {
-            this.dy *= -1
+
+        //Task 4:Implement an update method that handles the ball's movement.
+        //This should include logic to reverse the ball’s direction upon hitting the canvas sides (collision detection).
+        update() {
+          //Checking to see if the code should reverse the direction traveled.
+          if (this.x + this.radius >= width) {
+            this.dx *= -1;
+          }
+          if (this.x - this.radius <= 0) {
+            this.dx *= -1;
+          }
+          if (this.y + this.radius >= height) {
+            this.dy *= -1;
+          }
+          if (this.y - this.radius <= 0) {
+            this.dy *= -1;
+          }
+          //Actually moving the center of the circle.
+          this.x += this.dx;
+          this.y += this.dy;
         }
-        if (this.y - this.radius <= 0) {
-            this.dy *= -1
+
+        //Task 5:Use setInterval to continuously update the ball's position and redraw it on the canvas, creating the animation effect.
+        //Updating and redrawing method to create animation affect.
+        draw() {
+          ctx.clearRect(0, 0, width, height);
+          ball.drawCircle();
         }
-        //Actually moving the center of the circle.
-        this.x += this.dx;
-        this.y += this.dy;
-    }
-}
+      }
+
+      //Test data implementation
+      let ball = new Ball(200, 160, 20, 2, 2, "red");
+
+      //setInterval used below
+      setInterval(() => {
+        ball.update();
+        ball.draw();
+      }, 10);
     </script>
-</body>
+  </body>
 </html>
